@@ -122,7 +122,7 @@ f<!DOCTYPE html>
             isPlaying: false,
             isRandom: false,
             isRepeat: false,
-            config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
+            // config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
             songs: [
                 {
                     name: 'Ngày đẹp trời để nói chia tay',
@@ -155,10 +155,10 @@ f<!DOCTYPE html>
                     image: './img/namcocain.jpg'
                 }
             ],
-            setConfig: function(key,value){
-                this.config[key] = value;
-                localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
-            },
+            // setConfig: function(key,value){
+            //     this.config[key] = value;
+            //     localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
+            // },
             render: function(){
                 const htmls = this.songs.map((song, index) =>{
                     return `
@@ -261,12 +261,12 @@ f<!DOCTYPE html>
                 }
                 randomBtn.onclick = function (e) {
                     _this.isRandom = !_this.isRandom
-                    _this.setConfig('isRandom',_this.isRandom)
+                    // _this.setConfig('isRandom',_this.isRandom)
                     randomBtn.classList.toggle("active", _this.isRandom)
                 }
                 repeat.onclick = function(e){
                     _this.isRepeat = !_this.isRepeat
-                    _this.setConfig('isRepeat',_this.isRepeat)
+                    // _this.setConfig('isRepeat',_this.isRepeat)
                     repeat.classList.toggle("active", _this.isRepeat)
 
                 }
@@ -278,17 +278,21 @@ f<!DOCTYPE html>
                     }
                 }
                 playlist.onclick = function(e){
-                    const songNode = e.target.closest('.song:not(.active)')
-                    if(e.target.closest('.song:not(.active)') || e.target.closest('.option')){
-                        if(e.target.closest('.song:not(.active)')){
-                            _this.currentIndex = Number(songNode.dataset.inedx)
-                            _this.loadCurrentSong()
-                            _this.render()
-                            audio.play()
+                    const songNode = e.target.closest(".song:not(.active)");
+
+                    if (songNode || e.target.closest(".option")) {
+                        // Xử lý khi click vào song
+                        // Handle when clicking on the song
+                        if (songNode) {
+                            _this.currentIndex = Number(songNode.dataset.index);
+                            _this.loadCurrentSong();
+                            _this.render();
+                            audio.play();
                         }
 
-                        if(e.target.closest('.option')){
-
+                        // Xử lý khi click vào song option
+                        // Handle when clicking on the song option
+                        if (e.target.closest(".option")) {
                         }
                     }
                 }
@@ -308,11 +312,11 @@ f<!DOCTYPE html>
                 cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
                 audio.src = this.currentSong.path
             },
-            loadConfig: function(){
-                this.isRandom = this.config.isRandom
-                this.isRepeat = this.config.isRepeat
+            // loadConfig: function(){
+            //     this.isRandom = this.config.isRandom
+            //     this.isRepeat = this.config.isRepeat
 
-            },
+            // },
             nextSong: function(){
                 this.currentIndex++;
                 if(this.currentIndex >= this.songs.length){
@@ -337,7 +341,7 @@ f<!DOCTYPE html>
             },
             
             start: function(){
-                this.loadConfig()
+                // this.loadConfig()
 
                 this.defineProperties()
                 
@@ -347,8 +351,8 @@ f<!DOCTYPE html>
 
                 this.render()
 
-                randomBtn.classList.toggle("active", _this.isRandom)
-                repeat.classList.toggle("active", _this.isRepeat)
+                // randomBtn.classList.toggle("active", _this.isRandom)
+                // repeat.classList.toggle("active", _this.isRepeat)
             }
         }
 
